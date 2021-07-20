@@ -27,5 +27,3 @@ jobs:
           heroku_app_name: "saw2002webapp" #Must be unique in Heroku
           heroku_email: "jelabra@gmail.com"
           usedocker: true
-          docker_build_args: |
-            API_URI
