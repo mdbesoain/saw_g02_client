@@ -2,9 +2,9 @@ name: Continuous integration for SAW template
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-test:
@@ -14,8 +14,8 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
-    - run: npm ci
-    - run: npm test
+    - run: npm install
+    - run: npm build
   deploy-webapp:
     needs: [build-test]
     runs-on: ubuntu-latest
