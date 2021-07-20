@@ -18,23 +18,8 @@ export default function Footer(props) {
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
-              <a href="#home" className={classes.block}>
-                Home
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#company" className={classes.block}>
-                Company
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#portfolio" className={classes.block}>
-                Portfolio
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#blog" className={classes.block}>
-                Blog
+              <a href="https://github.com/sawmti/saw20_02" className={classes.block}   target="_blank">
+                Github
               </a>
             </ListItem>
           </List>
@@ -43,13 +28,12 @@ export default function Footer(props) {
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
             <a
-              href="https://www.creative-tim.com?ref=mdr-footer"
+              href="#"
               target="_blank"
               className={classes.a}
             >
-              Creative Tim
+              Grupo 2 SAW MTI 2020
             </a>
-            , made with love for a better web
           </span>
         </p>
       </div>

@@ -21,7 +21,7 @@ class HomeComponent extends Component {
       .then(res => {
         this.setState({ airports:  res.data});
       })
-      .catch(this.setState({error:true}))
+      .catch( () =>{this.setState({error:true})})
       .finally(this.setState({loading:false}));
   } 
     centralComponent(){

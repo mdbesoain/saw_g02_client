@@ -1,14 +1,14 @@
 import axios from 'axios';
 import {API_URL} from '../variables/urls';
-//import { setupCache } from 'axios-cache-adapter'
-/*
+import { setupCache } from 'axios-cache-adapter'
+
 const cache = setupCache({
   maxAge: 15 * 60 * 1000
-})*/
+})
 const instance =  axios.create({
   baseURL: API_URL,
   headers: {'Content-Type': 'application/json' , "Origin": "*" ,"Access-Control-Allow-Origin" : '*', 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', "Accept": "*"},
-  //adapter: cache.adapter
+  adapter: cache.adapter
 });
 
 
