@@ -7,6 +7,15 @@ on:
     branches: [ master ]
 
 jobs:
+   build-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12.14.1
+    - run: npm ci
+    - run: npm test
    deploy-webapp:
     needs: [build-test]
     runs-on: ubuntu-latest
