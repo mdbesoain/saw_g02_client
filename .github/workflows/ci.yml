@@ -7,29 +7,19 @@ on:
     branches: [ master ]
 
 jobs:
-  build-test:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.14.1
-    - run: npm ci 
-  deploy-webapp:
+   deploy-webapp:
     needs: [build-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout deploy 
         uses: actions/checkout@v2
-      - name: Loading Actions
+      - name: Deploying to Heroku
         #uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "saw2002webapp" #Must be unique in Heroku
-          email: "jelabra@gmail.com"
+          email: "matias.diazb@usm.cl"
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
