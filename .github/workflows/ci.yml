@@ -24,7 +24,8 @@ jobs:
       - name: Checkout deploy 
         uses: actions/checkout@v2
       - name: Loading Actions
-        uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
+        #uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
+        uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "saw2002webapp" #Must be unique in Heroku
