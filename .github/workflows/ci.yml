@@ -29,8 +29,7 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "saw2002webapp" #Must be unique in Heroku
-          heroku_email: "jelabra@gmail.com"
-          usedocker: true
+          email: "jelabra@gmail.com"
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
           docker_options: "--no-cache"
