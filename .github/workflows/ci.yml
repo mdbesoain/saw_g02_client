@@ -10,19 +10,27 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup node
+      uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
-    - run: npm ci
+    - run: npm ci 
   deploy-webapp:
     needs: [build-test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
+      - name: Checkout deploy 
+        uses: actions/checkout@v2
+      - name: Loading Actions
+        uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "saw2002webapp" #Must be unique in Heroku
           heroku_email: "jelabra@gmail.com"
           usedocker: true
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          docker_options: "--no-cache"
+          process_type: web
