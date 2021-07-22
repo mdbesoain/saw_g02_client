@@ -1,9 +1,9 @@
 {
-  "name": "material-dashboard-react",
+  "name": "saw-mti-2020",
   "version": "1.10.0",
-  "description": "Material Dashboard React. Coded by Creative Tim",
-  "private": false,
-  "main": "dist/index.js",
+  "description": "SAW 2020 MTI",
+  "private": true,
+  "main": "src/index.js",
   "dependencies": {
     "@material-ui/core": "4.11.4",
     "@material-ui/icons": "4.11.2",
@@ -45,12 +45,12 @@
     "url": "git+https://github.com/creativetimofficial/material-dashboard-react.git"
   },
   "keywords": [],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "author": "Grupo 2",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
   },
-  "homepage": "https://creativetimofficial.github.io/material-dashboard-react/#/dashboard",
+  "homepage": "https://saw2002webapp.herokuapp.com/",
   "optionalDependencies": {
     "@babel/core": "7.14.0",
     "typescript": "4.2.4"
