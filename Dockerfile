@@ -2,6 +2,7 @@
 FROM node:13.12.0-alpine as build
 RUN mkdir /app
 WORKDIR /app
+COPY package-lock.json /app
 COPY package.json /app
 RUN cd /app
 RUN npm ci --silent
