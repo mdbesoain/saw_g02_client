@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MapChart from 'components/MapChart/Index';
 import API from '../../providers/API';
 import {GET_AIRPORTS} from '../../variables/urls';
@@ -11,21 +11,24 @@ const override = css`
   border-color: red;
 `;
 
-class HomeComponent extends Component {
+export default class HomeComponent extends React.Component {
+   
     constructor(props) {
         super(props);
-        this.state = {  airports : [], loading : true, error: false}
+        this.state = { airports: [] , error: false };
     }
-    componentDidMount() {
+    componentDidMount(){
     API.get(GET_AIRPORTS)
       .then(res => {
-        this.setState({ airports:  res.data});
+          
+        this.setState({airports: res.data})
+
       })
-      .catch( () =>{this.setState({error:true})})
-      .finally(this.setState({loading:false}));
-  } 
-    centralComponent(){
-        if(this.state.airports.length == 0 && this.state.loading){
+      .catch(()=> {this.setState({error: true}) })
+        }
+
+    centralComponent  = () =>{
+        if(this.state.airports.length == 0){
             return   <ClipLoader color="ffffff" loading="true" css={override} size={150} />
         }
         else{
@@ -34,18 +37,22 @@ class HomeComponent extends Component {
                 return <><CustomAlert mensaje={'Error - Tuvimos un problema conectandonos con el servidor. Por favor intente más tarde'} close color="danger"/>
                 <br /></>
             }
-            if(this.state.airports.length > 0)
+            if(this.state.airports && this.state.airports.length > 0)
             {
-                return <div><MapChart  airports={this.state.airports}/></div> ;
+                return ( 
+                    <div>
+                        <MapChart  airports={this.state.airports} />
+                    </div> 
+                    )
             }
             
         }
     }
-    render() { 
+
+    render(){
         return ( <div>
             {this.centralComponent()}
         </div> );
     }
 }
  
-export default HomeComponent;

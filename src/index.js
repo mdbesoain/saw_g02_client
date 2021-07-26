@@ -28,13 +28,17 @@ import '~react-leaflet-markercluster/dist/styles.min.css';*/
 
 require('leaflet/dist/leaflet.css'); // inside .js file
 require('react-leaflet-markercluster/dist/styles.min.css'); // inside .js file
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserProvider } from "./contexts/User"
 
 ReactDOM.render(
+  <UserProvider>
   <BrowserRouter>
     <Switch>
       <Route path="/inicio" component={Admin} />
        <Redirect path="/" to="/inicio"/>
     </Switch>
-  </BrowserRouter>,
+  </BrowserRouter>
+  </UserProvider>,
   document.getElementById("root")
 );

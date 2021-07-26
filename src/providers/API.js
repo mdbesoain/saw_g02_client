@@ -7,7 +7,7 @@ const cache = setupCache({
 })
 const instance =  axios.create({
   baseURL: API_URL,
-  headers: {'Content-Type': 'application/json' , "Origin": "*" ,"Access-Control-Allow-Origin" : '*', 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', "Accept": "*"},
+  headers: {'Content-Type': 'application/json' ,"Access-Control-Allow-Origin" : '*', 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS', "Accept": "*"},
   adapter: cache.adapter
 });
 

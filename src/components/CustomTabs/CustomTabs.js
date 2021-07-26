@@ -1,99 +1,71 @@
-import React from "react";
+import React , { useState } from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
-// nodejs library to set properties for components
-import PropTypes from "prop-types";
 
-// material-ui components
-import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-// core components
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardHeader from "components/Card/CardHeader.js";
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card,CardBody} from 'reactstrap';
 
-import styles from "assets/jss/material-dashboard-react/components/customTabsStyle.js";
-
-const useStyles = makeStyles(styles);
+import classnames from 'classnames';
+import Wikidata from "components/Airport/Wikidata";
+import Restricciones from "components/Airport/Restricciones";
+import Comments from "components/Airport/Coments";
 
 export default function CustomTabs(props) {
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, value) => {
-    setValue(value);
-  };
-  const classes = useStyles();
-  const { headerColor, plainTabs, tabs, title, rtlActive } = props;
-  const cardTitle = classNames({
-    [classes.cardTitle]: true,
-    [classes.cardTitleRTL]: rtlActive,
-  });
-  return (
-    <Card plain={plainTabs}>
-      <CardHeader color={headerColor} plain={plainTabs}>
-        {title !== undefined ? <div className={cardTitle}>{title}</div> : null}
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          classes={{
-            root: classes.tabsRoot,
-            indicator: classes.displayNone,
-            scrollButtons: classes.displayNone,
-          }}
-          variant="scrollable"
-          scrollButtons="auto"
-        >
-          {tabs.map((prop, key) => {
-            var icon = {};
-            if (prop.tabIcon) {
-              icon = {
-                icon: <prop.tabIcon />,
-              };
-            }
-            return (
-              <Tab
-                classes={{
-                  root: classes.tabRootButton,
-                  selected: classes.tabSelected,
-                  wrapper: classes.tabWrapper,
-                }}
-                key={key}
-                label={prop.tabName}
-                {...icon}
-              />
-            );
-          })}
-        </Tabs>
-      </CardHeader>
-      <CardBody>
-        {tabs.map((prop, key) => {
-          if (key === value) {
-            return <div key={key}>{prop.tabContent}</div>;
-          }
-          return null;
-        })}
-      </CardBody>
-    </Card>
-  );
-}
+  const [activeTab, setActiveTab] = useState('1');
 
-CustomTabs.propTypes = {
-  headerColor: PropTypes.oneOf([
-    "warning",
-    "success",
-    "danger",
-    "info",
-    "primary",
-    "rose",
-  ]),
-  title: PropTypes.string,
-  tabs: PropTypes.arrayOf(
-    PropTypes.shape({
-      tabName: PropTypes.string.isRequired,
-      tabIcon: PropTypes.object,
-      tabContent: PropTypes.node.isRequired,
-    })
-  ),
-  rtlActive: PropTypes.bool,
-  plainTabs: PropTypes.bool,
-};
+  const toggle = tab => {
+    if(activeTab !== tab) setActiveTab(tab);
+  }
+  return (
+    <div>
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '1' })}
+            onClick={() => { toggle('1'); }}
+          >
+            Info
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '2' })}
+            onClick={() => { toggle('2'); }}
+          >
+            Restricciones
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({ active: activeTab === '3' })}
+            onClick={() => { toggle('3'); }}
+          >
+            Comentarios
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={activeTab}>
+        <TabPane tabId="1">
+          <Card>
+          <CardBody>
+            <Wikidata airport={props.airport}/>
+            </CardBody>
+            </Card>
+        </TabPane>
+        <TabPane tabId="2">
+        <Card>
+          <CardBody>
+            <Restricciones airport={props.airport}/>
+            </CardBody>
+            </Card>
+        </TabPane>
+        <TabPane tabId="3">
+          <Card>
+            <CardBody>
+              <Comments airport={props.airport}/>
+              </CardBody>
+              </Card>
+        </TabPane>
+      </TabContent>
+    </div>
+  );
+
+}

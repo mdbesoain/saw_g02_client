@@ -5,14 +5,17 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import CustomMarker from './CustomMarker';
 
 
+
 export default function MapChart(props) {
 
     const position = [-34.9780,-71.25];
+ 
+
     const markers = () =>{
           return (<MarkerClusterGroup>
             {
                 props.airports.map( (airport, key) =>{
-                  return <CustomMarker  airport={airport} key={key}/>
+                  return <CustomMarker  airport={airport} key={key} clickFunction={props.clickFunction}/>
                 })
             }
             </MarkerClusterGroup>

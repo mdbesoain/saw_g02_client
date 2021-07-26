@@ -9,6 +9,7 @@
     "@material-ui/icons": "4.11.2",
     "axios": "^0.21.1",
     "axios-cache-adapter": "^2.7.3",
+    "bootstrap": "^5.0.2",
     "chartist": "0.10.1",
     "classnames": "2.3.1",
     "d3-fetch": "^3.0.1",
@@ -22,12 +23,14 @@
     "react-chartist": "0.14.4",
     "react-dom": "^17.0.2",
     "react-leaflet": "^3.2.0",
+    "react-leaflet-enhanced-marker": "^1.0.21",
     "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
     "react-simple-maps": "^2.3.0",
     "react-spinners": "^0.11.0",
-    "react-swipeable-views": "0.13.9"
+    "react-swipeable-views": "0.13.9",
+    "reactstrap": "^8.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
