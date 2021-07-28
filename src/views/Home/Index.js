@@ -5,6 +5,7 @@ import {GET_AIRPORTS} from '../../variables/urls';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import CustomAlert from "components/Snackbar/CustomAlert.js";
+import { Card,CardBody, CardTitle} from 'reactstrap'
 const override = css`
   display: block;
   margin: 0 auto;
@@ -28,6 +29,7 @@ export default class HomeComponent extends React.Component {
         }
 
     centralComponent  = () =>{
+        
         if(this.state.airports.length == 0){
             return   <ClipLoader color="ffffff" loading="true" css={override} size={150} />
         }
@@ -41,7 +43,9 @@ export default class HomeComponent extends React.Component {
             {
                 return ( 
                     <div>
+                          
                         <MapChart  airports={this.state.airports} />
+                      
                     </div> 
                     )
             }
@@ -51,7 +55,12 @@ export default class HomeComponent extends React.Component {
 
     render(){
         return ( <div>
+            <Card>
+            <CardBody>
+            <CardTitle tag="h5">AirportData</CardTitle>
             {this.centralComponent()}
+            </CardBody>
+            </Card>
         </div> );
     }
 }

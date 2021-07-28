@@ -19,7 +19,7 @@
 import Dashboard from "@material-ui/icons/Dashboard";
 import HomeComponent from "views/Home/Index";
 import DatosComponent from "views/Datos/Index";
-
+import Entity from "views/Entity";
 const dashboardRoutes = [
   {
     path: "/",
@@ -35,6 +35,14 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DatosComponent,
+    layout: "/inicio",
+  },
+  {
+    path: "/entity/:id",
+    name: "Entity",
+    rtlName: "لوحة القيادة",
+    icon: Dashboard,
+    component: Entity,
     layout: "/inicio",
   },
   

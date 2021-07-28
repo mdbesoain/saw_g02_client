@@ -21,8 +21,13 @@ export default class Wikidata extends React.Component {
         API.get(url)
         .then(res => {
             
-            console.log(res.data);
-            this.setState({data:  res.data.results.bindings[0] });
+         
+            if( res.data.results.bindings[0] != undefined) {
+                this.setState({data:  res.data.results.bindings[0] });
+            }
+            else{
+                this.setState({data: null });
+            }
             this.setState({ loading:false});
   
         })
@@ -33,12 +38,12 @@ export default class Wikidata extends React.Component {
             return <ClipLoader color="ffffff" loading="true" css={override} size={50} />
         }
         else{
-            if(this.state.data){
+            if(this.state.data != null){
                 return (
                     <Row>
                         <Col md="4">
                         <br/>
-                        <img src={this.state.data.imagen.value} style={{width:'100%'}}/>
+                        <img src={this.state.data.imagen? this.state.data.imagen.value : require("../../assets/img/default-airport.jpg") } style={{width:'100%'}}/>
                         </Col>
                         <Col md="8">
                         <p><strong >Nombre:</strong> {this.state.data.itemLabel.value}</p>
@@ -50,8 +55,12 @@ export default class Wikidata extends React.Component {
                     </Row>
                 )
             }
-            else if(this.state.error){
+            if(this.state.error){
                 return <><CustomAlert mensaje={'Error - Tuvimos un problema conectandonos con el servidor. Por favor intente más tarde'} close color="danger"/>
+                <br /></>
+            }
+            else{
+                return <><CustomAlert mensaje={'Info - No hay información para este aeropuerto'} close color="info"/>
                 <br /></>
             }
         }

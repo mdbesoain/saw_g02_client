@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
+import {GET_COMMENTS} from '../../variables/urls';
 import API from '../../providers/API';
-import { Row, Col } from 'reactstrap';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import CustomAlert from "components/Snackbar/CustomAlert.js";
+import Comment from './Comment';
 const override = css`
   display: block;
   margin: 0 auto;
@@ -19,12 +19,11 @@ class Comments extends Component {
     }
 
     componentDidMount(){
-        var url = "sadsadsadasdas" +`/${this.props.airport.iata}`;
+        var url = GET_COMMENTS +`/${this.props.airport.iata}`;
         API.get(url)
         .then(res => {
             
-            console.log(res.data);
-            this.setState({data:  res.data.results.bindings[0] });
+            this.setState({data:  res.data});
             this.setState({ loading:false});
   
         })
@@ -36,27 +35,23 @@ class Comments extends Component {
             return <ClipLoader color="ffffff" loading="true" css={override} size={50} />
         }
         else{
-            if(this.state.data){
+            if(this.state.data.length > 0){
                 return (
-                    <Row>
-                        <Col md="4">
-                        <br/>
-                        <img src={this.state.data.imagen.value} style={{width:'100%'}}/>
-                        </Col>
-                        <Col md="8">
-                        <p><strong >Nombre:</strong> {this.state.data.itemLabel.value}</p>
-                        <p><strong>Codigo:</strong> {this.state.data.iata.value}</p>
-                        <p><strong>Descripcion:</strong> {this.state.data.itemDescription.value}</p>
-                        <p><strong> Ubicacion:</strong> {this.state.data.ciudadLabel.value}, {this.state.data.paisLabel.value}</p>
-                        <p> <a href={this.state.data.item.value} target="_blank" rel="noreferrer">Ver más en Wikidata</a></p>
-                        </Col>
-                    </Row>
+                    this.state.data.map( (comment,key) =>{
+                        return <Comment comment={comment} key={key} />
+                    })
                 )
             }
-            else if(this.state.error){
-                return <><CustomAlert mensaje={'Error - Tuvimos un problema conectandonos con el servidor. Por favor intente más tarde'} close color="danger"/>
+            
+            if(this.state.error){
+            return <><CustomAlert mensaje={'Error - Tuvimos un problema conectandonos con el servidor. Por favor intente más tarde'} close color="danger"/>
+            <br /></>
+            }
+            else{
+                return <><CustomAlert mensaje={'Info - No hay comentarios para este aeropuerto'} close color="info"/>
                 <br /></>
             }
+            
         }
     }
 
