@@ -28,6 +28,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: HomeComponent,
     layout: "/inicio",
+    sidebarVisible: true
   },
   {
     path: "/datos",
@@ -36,6 +37,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: DatosComponent,
     layout: "/inicio",
+    sidebarVisible: true
   },
   {
     path: "/entity/:id",
@@ -44,6 +46,7 @@ const dashboardRoutes = [
     icon: Dashboard,
     component: Entity,
     layout: "/inicio",
+    sidebarVisible: false
   },
   
 ];
