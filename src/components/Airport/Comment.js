@@ -16,7 +16,7 @@ class Comment extends Component {
         this.state = {  editing : false,  usuario : "", comentario: "" , createdAt : ""}
         this.createComent = this.createComent.bind(this);
         this.handleDeleteComment = this.handleDeleteComment.bind(this);
-        this.handleEditComment = this.handleEditComment.bind(this);
+        this.toogleEditing = this.toogleEditing.bind(this);
 
       
     }
@@ -36,7 +36,7 @@ class Comment extends Component {
     }
     createComent(){
         
-        if(this.state.editing){
+        if(this.props.comment.id){
             let url = GET_COMMENTS + "/" + this.props.comment.id
             let json = {
                 comentario : this.state.comentario
@@ -94,25 +94,31 @@ class Comment extends Component {
         .finally(this.reloadpage())
      }
 
-     handleEditComment () {
-         this.setState({editing : true});
+     toogleEditing () {
+         this.setState({editing : !this.state.editing});
+     }
+     textTitle (){
+         return this.props.comment.id? "Editar Comentario" : "Nuevo Comentario";
      }
     body = () => {
         if(this.state.editing){
             return (<>
                                 
                 <Col md="12">
-                    <CardTitle tag="h6">Nuevo comentario</CardTitle>
+            <CardTitle tag="h6">{this.textTitle()}</CardTitle>
+                    {!this.props.comment.id &&
                     <FormGroup>
                         <Label for="exampleText">Usuario</Label>
                         <Input type="text" name="user" id="user" value={this.state.usuario} onChange={this.handleUserChange}/>
                     </FormGroup>
+                    }
                     <FormGroup>
                         <Label for="exampleText">Comentario</Label>
                         <Input type="textarea" name="comment" id="comment"  value={this.state.comentario} onChange={this.handleCommentChange}/>
                     </FormGroup>
                     <br/>
-                    <Button onClick={this.createComent}>Enviar</Button>
+                    <Button variant="contained" onClick={this.createComent} color="primary">Enviar</Button>&nbsp;&nbsp;
+                    {this.props.comment.id && <Button  variant="contained"onClick={this.toogleEditing}>Cancelar</Button> }
                 </Col>
              </>)
         }
@@ -129,7 +135,7 @@ class Comment extends Component {
                             </Col>
                             <Col md="2">
                             <DeleteIcon  onClick={this.handleDeleteComment}/>
-                            <CreateIcon  onClick={this.handleEditComment}/>
+                            <CreateIcon  onClick={this.toogleEditing}/>
                             </Col>
                         </Row>
                         
