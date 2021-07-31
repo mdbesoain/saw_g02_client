@@ -7,32 +7,67 @@ import {GET_COMMENTS} from '../../variables/urls';
 import API from '../../providers/API';
 import Usuario from "../../assets/img/user.png"
 import Moment from 'react-moment';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
+
 class Comment extends Component {
     constructor(props) {
         super(props);
-        this.state = {  editing : false,  usuario : "", comentario: "" }
+        this.state = {  editing : false,  usuario : "", comentario: "" , createdAt : ""}
         this.createComent = this.createComent.bind(this);
-        
+        this.handleDeleteComment = this.handleDeleteComment.bind(this);
+        this.handleEditComment = this.handleEditComment.bind(this);
+
+      
     }
     componentDidMount(){
 
-        this.setState({editing : this.props.editing});
+        this.setinicialStatus();
     }
 
+    setinicialStatus (){
+        this.setState({editing : this.props.editing});
+        this.setState({usuario : this.props.comment.usuario})
+        this.setState({comentario : this.props.comment.comentario})
+        this.setState({createdAt : this.props.comment.createAt})
+    }
+    reloadpage () {
+        window.location.reload(false);
+    }
     createComent(){
-        let json = {
-            aeropuerto : this.props.airport.iata,
-            comentario : this.state.comentario,
-            usuario : this.state.usuario
+        
+        if(this.state.editing){
+            let url = GET_COMMENTS + "/" + this.props.comment.id
+            let json = {
+                comentario : this.state.comentario
+            }
+            API.put(url, json)
+            .then(res => {
+            
+            this.setState({data:  res.data});
+            this.setState({ loading:false});
+            
+            })
+            .catch(()=> {this.setState({error: true}) })
+            .finally(this.reloadpage())
         }
-        API.post(GET_COMMENTS, json)
-        .then(res => {
+        else{
+            let json = {
+                aeropuerto : this.props.airport.iata,
+                comentario : this.state.comentario,
+                usuario : this.state.usuario
+            }
+            API.post(GET_COMMENTS, json)
+            .then(res => {
             
             this.setState({data:  res.data});
             this.setState({ loading:false});
             this.props.callBack("Called from child");
-        })
-        .catch(()=> {this.setState({error: true}) })
+            })
+            .catch(()=> {this.setState({error: true}) })
+            .finally(this.reloadpage())
+        }
+        
         
     }
 
@@ -42,12 +77,32 @@ class Comment extends Component {
      handleCommentChange = (e) =>{
         this.setState({comentario : e.target.value})
     }
+
+     handleDeleteComment(){
+
+        let url = GET_COMMENTS + "/" + this.props.comment.id
+        this.setState({ loading:true});
+        API.delete(url)
+        .then(res => {
+            
+            this.setState({data:  res.data});
+            this.setState({ loading:false});
+
+            
+        })
+        .catch(()=> {this.setState({error: true}) })
+        .finally(this.reloadpage())
+     }
+
+     handleEditComment () {
+         this.setState({editing : true});
+     }
     body = () => {
-        if(this.props.editing){
+        if(this.state.editing){
             return (<>
                                 
                 <Col md="12">
-                    <CardTitle tag="h5">Nuevo comentario</CardTitle>
+                    <CardTitle tag="h6">Nuevo comentario</CardTitle>
                     <FormGroup>
                         <Label for="exampleText">Usuario</Label>
                         <Input type="text" name="user" id="user" value={this.state.usuario} onChange={this.handleUserChange}/>
@@ -67,9 +122,21 @@ class Comment extends Component {
                 <img src={Usuario}  style={{width:"100%"}}/>
                 </Col>
                 <Col md="11">
-                    <CardTitle tag="h6">{this.props.comment.usuario}</CardTitle>
-                    <CardSubtitle tag="small" className="mb-2 text-muted"><Moment format=" hh:mm DD/MM/YYYY">{this.props.comment.createAt}</Moment></CardSubtitle>
-                    <CardText>{this.props.comment.comentario}</CardText>                  
+                    <CardTitle tag="h6">
+                        <Row>
+                            <Col md="10">
+                            {this.state.usuario}
+                            </Col>
+                            <Col md="2">
+                            <DeleteIcon  onClick={this.handleDeleteComment}/>
+                            <CreateIcon  onClick={this.handleEditComment}/>
+                            </Col>
+                        </Row>
+                        
+                    
+                    </CardTitle>
+                    <CardSubtitle tag="small" className="mb-2 text-muted"><Moment format=" hh:mm DD/MM/YYYY">{this.state.createAt}</Moment></CardSubtitle>
+                    <CardText>{this.state.comentario}</CardText>                  
                 </Col>
             </>
             )

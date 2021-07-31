@@ -11,7 +11,11 @@ const override = css`
   border-color: red;
 `;
 
-
+const emptyComment = {
+    usuario: "",
+    comentario : "",
+    createdAt : ""
+}
 class Comments extends Component {
     constructor(props) {
         super(props);
@@ -52,7 +56,7 @@ class Comments extends Component {
                         })
                     }
                     <br/>
-                    <Comment airport={this.props.airport} editing="true" callBack={this.getComments}/>
+                    <Comment airport={this.props.airport} editing="true" callBack={this.getComments} comment={emptyComment}/>
                     </>
                 )
             }
@@ -66,7 +70,7 @@ class Comments extends Component {
                     <>
                         <CustomAlert mensaje={'Info - No hay comentarios para este aeropuerto'} close color="info"/>
                         <br />
-                        <Comment airport={this.props.airport} editing="true" callBack={this.getComments}/>
+                        <Comment airport={this.props.airport} editing="true" callBack={this.getComments} comment={emptyComment}/>
                     </>
                 )
             }
