@@ -1,112 +1,121 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-// core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Table from "components/Table/Table.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import API from '../../providers/API';
+import { GET_AIRPORTS } from '../../variables/urls';
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+import CustomAlert from "components/Snackbar/CustomAlert.js";
+import { Card, CardBody, CardTitle } from 'reactstrap'
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import ToolkitProvider, { Search }  from 'react-bootstrap-table2-toolkit';
 
-const styles = {
-  cardCategoryWhite: {
-    "&,& a,& a:hover,& a:focus": {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0",
-    },
-    "& a,& a:hover,& a:focus": {
-      color: "#FFFFFF",
-    },
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
+const columns = [{
+  dataField: 'iata',
+  text: 'IATA',
+  style: { cursor: 'pointer' }
+}, {
+  dataField: 'name',
+  text: 'Nombre',
+  style: { cursor: 'pointer' }
+}, {
+  dataField: 'countryName',
+  text: 'Pais',
+  style: { cursor: 'pointer' }
+}];
+const { SearchBar } = Search;
+
+const tableRowEvents = {
+  onClick: (e, row) => {
+    let win = window.open("/entity/"+row.iata, "_blank");
+    win.focus();
   },
-  cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none",
-    "& small": {
-      color: "#777",
-      fontSize: "65%",
-      fontWeight: "400",
-      lineHeight: "1",
-    },
-  },
-};
+}
 
-const useStyles = makeStyles(styles);
+export default class Datos extends React.Component {
 
-export default function DatosComponent() {
-  const classes = useStyles();
-  return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
+  constructor(props) {
+    super(props);
+    this.state = { airports: [], error: false , loading : false};
+  }
+  
+  componentDidMount() {
+    this.setState({ loading: true })
+    API.get(GET_AIRPORTS)
+      .then(res => {
+
+        this.setState({ airports: res.data });
+        this.setState({ loading: false });
+
+      })
+      .catch(() => { this.setState({ error: true }) })
+  }
+ 
+ componentWillUnmount(){
+  console.log("component will unmount");
+  this.setState({ airports: [] });
+  this.setState({ loading: true });
+ }
+  centralComponent = () => {
+
+    if (this.state.loading ) {
+      return <ClipLoader color="ffffff" loading="true" css={override} size={150} />
+    }
+    else {
+      if (this.state.error) {
+        return <><CustomAlert mensaje={'Error - Tuvimos un problema conectandonos con el servidor. Por favor intente más tarde'} close color="danger" />
+          <br /></>
+      }
+      if (this.state.airports && this.state.airports.length > 0) {
+        return (
+          <div>
+
+            <ToolkitProvider
+              keyField="id"
+              data={ this.state.airports  }
+              columns={ columns }
+             
+              search
+            >
+              
+              {
+                props => (
+                  <div>
+                    <p>Buscar:</p>
+                    <SearchBar { ...props.searchProps } />
+                    <hr />
+                    <BootstrapTable
+                      { ...props.baseProps }
+                      pagination={ paginationFactory() }
+                      hover
+                      rowEvents={ tableRowEvents }
+                    />
+                  </div>
+                )
+              }
+            </ToolkitProvider>
+          </div>
+        )
+      }
+
+    }
+  }
+  render() {
+    return (
+      <div>
         <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"],
-              ]}
-            />
+            <CardTitle tag="h5">AirportData</CardTitle>
+            {this.centralComponent()}
           </CardBody>
         </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>
-              Table on Plain Background
-            </h4>
-            <p className={classes.cardCategoryWhite}>
-              Here is a subtitle for this table
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                [
-                  "4",
-                  "Philip Chaney",
-                  "$38,735",
-                  "Korea, South",
-                  "Overland Park",
-                ],
-                [
-                  "5",
-                  "Doris Greene",
-                  "$63,542",
-                  "Malawi",
-                  "Feldkirchen in Kärnten",
-                ],
-                ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
-  );
+      </div>
+    );
+  }
 }

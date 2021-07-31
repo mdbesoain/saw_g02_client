@@ -21,8 +21,13 @@
     "perfect-scrollbar": "1.5.1",
     "prop-types": "15.7.2",
     "react": "^17.0.2",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-bootstrap-table2-paginator": "^2.1.2",
+    "react-bootstrap-table2-toolkit": "^2.1.3",
     "react-chartist": "0.14.4",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.2",
+    "react-joyride": "^2.3.0",
     "react-leaflet": "^3.2.0",
     "react-leaflet-enhanced-marker": "^1.0.21",
     "react-leaflet-markercluster": "^3.0.0-rc1",
@@ -31,7 +36,9 @@
     "react-scripts": "4.0.3",
     "react-simple-maps": "^2.3.0",
     "react-spinners": "^0.11.0",
+    "react-structured-data": "0.0.14",
     "react-swipeable-views": "0.13.9",
+    "react-useragent": "^1.1.2",
     "reactstrap": "^8.9.0"
   },
   "scripts": {

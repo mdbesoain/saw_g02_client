@@ -16,7 +16,8 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
+import Public from "@material-ui/icons/Public";
+import TableChart from "@material-ui/icons/TableChart";
 import HomeComponent from "views/Home/Index";
 import DatosComponent from "views/Datos/Index";
 import Entity from "views/Entity";
@@ -25,25 +26,27 @@ const dashboardRoutes = [
     path: "/",
     name: "Inicio",
     rtlName: "لوحة القيادة",
-    icon: Dashboard,
+    icon: Public,
     component: HomeComponent,
     layout: "/inicio",
-    sidebarVisible: true
+    sidebarVisible: true,
+    class : "primero"
   },
   {
     path: "/datos",
     name: "Tabla",
     rtlName: "لوحة القيادة",
-    icon: Dashboard,
+    icon: TableChart,
     component: DatosComponent,
     layout: "/inicio",
-    sidebarVisible: true
+    sidebarVisible: true,
+    class : "segundo"
   },
   {
     path: "/entity/:id",
     name: "Entity",
     rtlName: "لوحة القيادة",
-    icon: Dashboard,
+    icon: TableChart,
     component: Entity,
     layout: "/inicio",
     sidebarVisible: false

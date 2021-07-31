@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import CustomAlert from "components/Snackbar/CustomAlert.js";
 import { Card,CardBody, CardTitle} from 'reactstrap'
+
 const override = css`
   display: block;
   margin: 0 auto;
@@ -54,7 +55,9 @@ class Entity extends Component {
             {
                 return ( 
                     <div>
-                        <CustomTabs  airport={this.state.airport} />
+                       
+                            <CustomTabs  airport={this.state.airport} />
+                      
                     </div> 
                     )
             }

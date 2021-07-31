@@ -29,15 +29,19 @@ import '~react-leaflet-markercluster/dist/styles.min.css';*/
 require('leaflet/dist/leaflet.css'); // inside .js file
 require('react-leaflet-markercluster/dist/styles.min.css'); // inside .js file
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { UserProvider } from "./contexts/User"
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 
-ReactDOM.render(
-  <UserProvider>
-  <BrowserRouter>
-    <Switch>
-      <Route path="/" component={Admin} />
-    </Switch>
-  </BrowserRouter>
-  </UserProvider>,
-  document.getElementById("root")
-);
+
+
+  ReactDOM.render(
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={Admin} />
+      </Switch>
+    </BrowserRouter>,
+    document.getElementById("root")
+  );
+  
+
